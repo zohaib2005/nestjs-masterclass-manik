@@ -18,10 +18,13 @@ export class UsersController {
   @Get('/:id?')
   public getUsers(
     @Param('id', ParseIntPipe) id: number | undefined,
-    @Query('limit') limit: any,
+    @Query('limit', ParseIntPipe) limit: number,
+    @Query('page', ParseIntPipe) page: number,
   ) {
     console.log(typeof id);
     console.log(id);
+    console.log(typeof limit);
+    console.log(typeof page);
     return 'You sent a get request to users endpoint';
   }
 
