@@ -16,6 +16,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user-dto';
 import { GetUsersParamDto } from './dtos/get-users-params.dto';
+import { PatchUserDto } from './dtos/patch-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -34,5 +35,10 @@ export class UsersController {
   public createUsers(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto);
     return 'You sent a post request to users endpointx';
+  }
+
+  @Patch()
+  public patchUser(@Body() patchUserDto: PatchUserDto) {
+    return patchUserDto;
   }
 }
