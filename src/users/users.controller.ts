@@ -30,11 +30,7 @@ export class UsersController {
   }
 
   @Post()
-  public createUsers(
-    @Body(new ValidationPipe()) createUserDto: CreateUserDto,
-    @Headers() headers: any,
-    @Ip() ip: any,
-  ) {
+  public createUsers(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto);
     return 'You sent a post request to users endpointx';
   }
