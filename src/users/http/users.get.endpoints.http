@@ -1,3 +1,4 @@
-GET http://localhost:3000/users/234
-?limit=sdfg
-&page=20
+# Request first goes to users.controller.ts then users.service.ts
+GET http://localhost:3000/users/
+?limit=10
+&page=1
