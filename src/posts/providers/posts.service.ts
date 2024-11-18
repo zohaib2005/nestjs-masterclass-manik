@@ -4,5 +4,18 @@ import { Injectable } from '@nestjs/common';
 export class PostsService {
   public findAll(userId: string) {
     console.log(userId);
+    // Users Service
+    // Find A User
+
+    return [
+      {
+        title: 'Test Tile',
+        content: 'Test Content',
+      },
+      {
+        title: 'Test Tile 2',
+        content: 'Test Content 2',
+      },
+    ];
   }
 }
