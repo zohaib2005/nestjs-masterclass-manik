@@ -8,6 +8,7 @@ import { User } from './user.entity';
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService],
+  // below line add entity table to database pgadmin
   imports: [TypeOrmModule.forFeature([User])],
 })
 export class UsersModule {}
