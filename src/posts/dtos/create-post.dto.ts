@@ -8,13 +8,14 @@ import {
   IsOptional,
   IsString,
   IsUrl,
-  Matches, MaxLength,
+  Matches,
+  MaxLength,
   Min,
   MinLength,
-  ValidateNested
-} from "class-validator";
+  ValidateNested,
+} from 'class-validator';
 
-import { CreatePostMetaOptionsDto } from './create-post-meta-options.dto';
+import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-meta-options.dto';
 import { Type } from 'class-transformer';
 import { postStatus } from '../enums/postStatus.enum';
 import { postType } from '../enums/postType.enum';
@@ -106,29 +107,9 @@ export class CreatePostDto {
   @MinLength(3, { each: true })
   tags?: string[];
 
-  @ApiPropertyOptional({
-    type: 'array',
-    required: false,
-    items: {
-      type: 'object',
-      properties: {
-        key: {
-          type: 'string',
-          description:
-            'The key can be any string identifier for your meta option',
-          example: 'sidebarEnabled',
-        },
-        value: {
-          type: 'any',
-          description: 'Any value that you want to save to the key',
-          example: true,
-        },
-      },
-    },
-  })
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreatePostMetaOptionsDto)
-  metaOptions?: CreatePostMetaOptionsDto[];
+  metaOptions?: CreatePostMetaOptionsDto | null;
 }

@@ -1,9 +1,10 @@
 import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
-  Column,
   UpdateDateColumn,
-  CreateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -20,6 +21,6 @@ export class MetaOption {
   @CreateDateColumn()
   createDate: Date;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   updateDate: Date;
 }
