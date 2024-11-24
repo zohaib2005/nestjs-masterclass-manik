@@ -5,7 +5,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { User } from '../user.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 
@@ -20,6 +20,9 @@ export class UsersService {
      * */
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+
+    // Inject DataSource
+    private readonly dataSource: DataSource,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -70,5 +73,32 @@ export class UsersService {
       firstName: 'Alice',
       email: 'alice@doe.com',
     };
+  }
+
+  public async createMany(createUserDto: CreateUserDto[]) {
+    let newUsers: User[] = [];
+    // Create Query Runner Instance
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    // Connect Query Runner to datasource
+    await queryRunner.connect();
+
+    // Start Transaction
+    await queryRunner.startTransaction();
+    try {
+      for (let user of createUserDto) {
+        let newUser = queryRunner.manager.create(User, user);
+        let result = await queryRunner.manager.save(newUser);
+        newUsers.push(result);
+      }
+      // If Successful Commit
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      // If unsuccessful rollback
+      await queryRunner.rollbackTransaction();
+    } finally {
+      // Release connection
+      await queryRunner.release();
+    }
   }
 }
